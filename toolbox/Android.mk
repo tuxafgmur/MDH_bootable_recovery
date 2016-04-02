@@ -4,8 +4,8 @@ include $(CLEAR_VARS)
 
 OUR_TOOLS := \
     start \
-    stop \
-    
+    stop
+
 ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
     OUR_TOOLS += \
         getprop \
@@ -15,9 +15,6 @@ endif
 # If busybox does not have SELinux support, provide these tools with toolbox.
 # Note that RECOVERY_BUSYBOX_TOOLS will be empty if TW_USE_TOOLBOX == true.
 ifeq ($(TWHAVE_SELINUX), true)
-    TOOLS_FOR_SELINUX := \
-        ls
-
     ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
         TOOLS_FOR_SELINUX += \
             load_policy \
@@ -31,8 +28,8 @@ ifeq ($(TWHAVE_SELINUX), true)
 
     OUR_TOOLS += $(filter-out $(RECOVERY_BUSYBOX_TOOLS), $(TOOLS_FOR_SELINUX))
 
-    # toolbox setenforce is used during init, so it needs to be included here
-    # symlink is omitted at the very end if busybox already provides this
+#     toolbox setenforce is used during init, so it needs to be included here
+#     symlink is omitted at the very end if busybox already provides this
     ifeq ($(shell test $(PLATFORM_SDK_VERSION) -lt 23; echo $$?),0)
        OUR_TOOLS += setenforce
     endif
@@ -40,7 +37,7 @@ endif
 
 ifeq ($(TW_USE_TOOLBOX), true)
     ifeq ($(shell test $(PLATFORM_SDK_VERSION) -gt 22; echo $$?),0)
-        # These are the only toolbox tools in M. The rest are now in toybox.
+        These are the only toolbox tools in M. The rest are now in toybox.
         BSD_TOOLS := \
             dd \
             du \
@@ -225,6 +222,7 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -gt 22; echo $$?),0)
     OUR_TOOLS += getprop setprop
     ifneq ($(TW_USE_TOOLBOX), true)
         LOCAL_SRC_FILES += ls.c
+        OUR_TOOLS += ls
     endif
 endif
 
