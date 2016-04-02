@@ -354,7 +354,8 @@ LOCAL_ADDITIONAL_DEPENDENCIES := \
     fatlabel \
     mkfs.fat \
     permissive.sh \
-    simg2img_twrp
+    simg2img_twrp \
+    parted
 
 ifneq ($(TARGET_ARCH), arm64)
     ifneq ($(TARGET_ARCH), x86_64)
